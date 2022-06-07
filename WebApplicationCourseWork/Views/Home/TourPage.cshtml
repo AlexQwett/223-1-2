@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Tour Page";
+}
+
+<div class="tour-information">
+    <div>
+        <p class="info">
+            Town: @ViewBag.FilteredTour.Tour.Hotel.City.CityName<br />
+            Hotel: @ViewBag.FilteredTour.Tour.Hotel.HotelTitle<br />
+            Hotel stars: @ViewBag.FilteredTour.Tour.Hotel.Stars<br />
+            Tour price: @ViewBag.FilteredTour.Tour.Price$<br />
+        </p>
+    </div>
+
+    <a href="~/Home/ReserveTour/@ViewBag.TourId">
+        <button class="button">Reserve tour</button>
+    </a>
+
+</div>

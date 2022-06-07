@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Delete tour";
+}
+
+
+<div class="tours">
+        <div class="masonry-layout">
+            @foreach (var item in @ViewBag.Tours)
+            {
+                <div class="masonry-layout__panel">
+                    <div class="masonry-layout__panel-content">
+                        <a href="~/Home/Tour/@item.FilteredTourId">
+                            <div class="tour" id="box">
+                                <form method="post" action="~/Home/Delete">
+                                    <div class="content"><img class="icon" src="~/source/globe.png"/>@item.Category.Title</div> <div class="content"><img class="icon" src="~/source/town.png"/>Town: @item.Tour.Hotel.City.CityName</div> <div class="content">Price: @item.Tour.Price$</div>
+                                    <input hidden="hidden" name="id" value="@item.FilteredTourId">
+                                    <button type="submit" class="button">Delete</button>                                    
+                                </form>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+</div>

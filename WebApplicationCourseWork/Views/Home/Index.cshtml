@@ -1,0 +1,90 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<ul class="navbar-home">
+    @if (@ViewBag.User.Login is not null)
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Add">Add tour</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Delete">Delete tour</a>
+        </li>
+    }                        
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Registration">Register</a>
+    </li>
+    @if (@ViewBag.User.Login is null)
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogIn">Log in</a>
+        </li>
+    }
+    else{
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">Log out</a>
+        </li>
+    }
+</ul>
+
+<div class="filter">
+    <form method="get" action="~/Home/Find/">
+        <div class="container">
+            <div class="select" tabindex="1">
+                @for (var i = 0; i < @ViewBag.Categories.Count; i++)
+               {
+                   <input class="selectopt" name="category" type="radio" id="category{@i}" value="@ViewBag.Categories[i].Title" checked>
+                   <label for="category{@i}" class="option">@ViewBag.Categories[i].Title</label>
+               }             
+            </div>
+
+            <div class="select" tabindex="1">
+                @for (var i = 0; i < @ViewBag.Towns.Count; i++)
+               {
+                   <input class="selectopt" name="town" type="radio" id="town{@i}" value="@ViewBag.Towns[i].CityName" checked>
+                   <label for="town{@i}" class="option">@ViewBag.Towns[i].CityName</label>
+               }             
+            </div>
+
+            <div class="select" tabindex="1">
+                @for (var i = 0; i < @ViewBag.Stars.Count; i++)
+               {
+                   <input class="selectopt" name="hotelStars" type="radio" id="stars{@i}" value="@ViewBag.Stars[i]" checked>
+                   <label for="stars{@i}" class="option">@ViewBag.Stars[i]</label>
+               }             
+            </div>
+
+            <button type="submit" class="button">Find</button>
+        </div>
+    </form>
+</div>
+
+<div class="tours">
+        <div class="masonry-layout">
+            @foreach (var item in @ViewBag.HotTours)
+            {
+                <div class="masonry-layout__panel">
+                    <div class="masonry-layout__panel-content">
+                        <a href="~/Home/Tour/@item.FilteredTourId">
+                            <div class="hottour" id="box">
+                                <div class="content"><img class="icon" src="~/source/flames.png"/>@item.Category.Title.ToUpper()</div> <div class="content"><img class="icon" src="~/source/town.png"/>Town: @item.Tour.Hotel.City.CityName</div> <div class="content">Price: @item.Tour.Price$</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+            @foreach (var item in @ViewBag.DefaultTours)
+            {
+                <div class="masonry-layout__panel">
+                    <div class="masonry-layout__panel-content">
+                        <a href="~/Home/Tour/@item.FilteredTourId">
+                            <div class="tour" id="box">
+                                <div class="content"><img class="icon" src="~/source/globe.png"/>@item.Category.Title</div> <div class="content"><img class="icon" src="~/source/town.png"/>Town: @item.Tour.Hotel.City.CityName</div> <div class="content">Price: @item.Tour.Price$</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+</div>
